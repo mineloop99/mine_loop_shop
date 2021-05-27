@@ -1,55 +1,78 @@
 import 'package:flutter/material.dart';
-import './question.dart';
-import './answer.dart';
+import 'package:mine_loop_shop/transaction.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   @override
-  State<StatefulWidget> createState() {
-    return _MyAppState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'My App',
+      home: MyHomePage(),
+    );
   }
 }
 
-class _MyAppState extends State<MyApp>{
-  int _questionIndex = 0;
-  final questions = [{
-    'questionText':'What\'s your favorite color?',
-    'answers': ['Black',  'Red', 'Green', 'Black'],
-    },{
-    'questionText' : 'What\'s your favorite animal?',
-    'answers': ['Lion',  'Elephant', 'Dolphin', 'Rat'],
-    },{
-    'questionText' : 'What\'s your favorite subject?',
-    'answers': ['Math',  'Music', 'Rich', 'Poor'],
-    }];
-
-  void _answerQuestion(){
-    if(_questionIndex >= questions.length)
-      return null;
-    setState(() {
-      _questionIndex = _questionIndex + 1;
-    });
-    print(_questionIndex);
-  }
+class MyHomePage extends StatelessWidget {
+  final List<Transaction> transactions = [
+    Transaction(
+        id: 't1', title: 'New Shoes', amount: 69.96, date: DateTime.now()),
+    Transaction(
+        id: 't2', title: 'New Groceries', amount: 19.96, date: DateTime.now()),
+  ];
   @override
   Widget build(BuildContext context) {
-
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Hello'),
-        ),
-        body: Column(
-          children: [
-            Question(
-              questions[_questionIndex]['questionText'].toString(),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Flutter App'),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            width: double.infinity,
+            child: Card(
+              color: Colors.blue,
+              child: Text('CHART!'),
+              elevation: 5.0,
             ),
-            ...(questions[_questionIndex]['answers'] as List<String>).map(
-                    (answer) => Answer(_answerQuestion, answer)
-            ).toList(),
-          ],
-        ),
+          ),
+          Column(
+            children: transactions.map((tx) {
+              return Card(
+                child: Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 15.0),
+                      padding: EdgeInsets.all(10.0),
+                      child: Text(tx.amount.toString()),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.red,
+                          width: 2,
+                        ),
+                      ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          tx.title,
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                        ),
+                        Text(tx.date.toString()),
+                      ],
+                    )
+                  ],
+                ),
+              );
+            }).toList(),
+          )
+        ],
       ),
     );
   }
