@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/widgets/chat_bar.dart';
+import '../widgets/chat_bar.dart';
 import '../models/transaction.dart';
 import 'package:intl/intl.dart';
 import './chat_bar.dart';
@@ -53,8 +53,8 @@ class Chart extends StatelessWidget {
             return Flexible(
               fit: FlexFit.tight,
               child: ChartBar(
-                e['day'],
-                e['amount'],
+                e['day'].toString(),
+                (e['amount'] as double),
                 totalSpending == 0.0
                     ? 0.0
                     : (e['amount'] as double) / totalSpending,

@@ -6,9 +6,9 @@ class TaskInformation {
   final String lastName;
   final DateTime birthday;
   TaskInformation({
-    @required this.id,
-    @required this.firstName,
-    @required this.lastName,
-    @required this.birthday,
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.birthday,
   });
 }

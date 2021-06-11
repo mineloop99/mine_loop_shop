@@ -15,16 +15,18 @@ class _NewTaskInformationState extends State<NewTaskInformation> {
   final lNameController = TextEditingController();
   DateTime bdayPicker = DateTime.now();
 
-  Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: bdayPicker,
-        firstDate: DateTime(1960),
-        lastDate: DateTime(2022));
-    if (picked != null)
+  Future _selectDate(BuildContext context) async {
+    await showDatePicker(
+            context: context,
+            initialDate: bdayPicker,
+            firstDate: DateTime(1960),
+            lastDate: DateTime(2022))
+        .then((value) {
+      if (value == null) return;
       setState(() {
-        bdayPicker = picked;
+        bdayPicker = value;
       });
+    });
   }
 
   void submitData() {
